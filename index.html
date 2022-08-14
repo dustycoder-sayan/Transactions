@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <header>
+    </header>
+    <div class="main-container">
+            <div class="forms">
+                <form action="/transaction-complete" method="post">
+                    <input class="textbox" type="text" name="from" placeholder="Sender Name">
+                    <br>
+                    <input class="textbox" type="text" name="to" placeholder="Receiver Name">
+                    <br>
+                    <input class="textbox input" type="number" name="amount" min="50" max="25000" placeholder="Amount in Rs.">
+                    <br><br><button type="submit" name="submit" class="Submit">Send</button>
+                </form>
+            </div>
+    </div>
+</body>

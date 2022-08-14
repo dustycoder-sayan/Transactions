@@ -1,0 +1,34 @@
+header {
+    text-align: center;
+    background-image: url("../images/header_logo.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12%;
+    padding-top: 25px;
+    padding-bottom: 75px;
+    font-size: large;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.main-container {
+    margin: 5px 2px;
+    margin-bottom: 0%;
+    text-align: center;
+    background-image: url("../images/success_transaction.JPG");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 25px 25px;
+    border-radius: 10px;
+}
+
+img {
+    display: block;
+}
