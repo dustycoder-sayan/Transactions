@@ -16,6 +16,21 @@ let generateHash = str => {
     return hash;
 }
 
+let getLastHash = path => {
+
+    fs.readFile(path, 'utf-8', function(err, data) {
+    if (err) throw err;
+
+    var lines = data.trim().split('\n');
+    var lastLine = lines.slice(-1)[0];
+
+    var fields = lastLine.split(',');
+    var prevHash = fields.slice(-1)[0];
+
+    return prevHash;
+});
+}
+
 let new_file = (name, f, t, a, dt, hash) => {
     const csvWriter = createCsvWriter({
     path: name,
@@ -42,24 +57,21 @@ let new_file = (name, f, t, a, dt, hash) => {
 }
 
 let exisiting_file = (name, f, t, a, dt, hash) => {
-    list = [[f,t,a,dt,hash]];
+    let prevHash = getLastHash(name);
+    hash = (hash + prevHash).replace("undefined","");
+    let list = [[f,t,a,dt,hash]];
     const csv = new objectsToCsv(list);
     csv.toDisk(name, {append:true});
 }
 
 let frame_data = (from, to, amount, dt, hashCode) => {
-    let fileName1 = "./"+from+"_transactions.csv";
-    let fileName2 = "./"+to+"_transactions.csv";
-    
-    if(fs.existsSync(fileName1))
-        exisiting_file(fileName1, from, to, amount, dt, hashCode);
-    else
-        new_file(fileName1, from, to, amount, dt, hashCode);
+    names = [from,to].sort();
+    let fileName = "./Transactions-Complete/"+from+"_"+to+"_transactions.csv";
 
-    if(fs.existsSync(fileName2))
-        exisiting_file(fileName2, from, to, amount, dt, hashCode);
+    if(fs.existsSync(fileName))
+        exisiting_file(fileName, from, to, amount, dt, hashCode);
     else
-        new_file(fileName2, from, to, amount, dt, hashCode);
+        new_file(fileName, from, to, amount, dt, hashCode);
 }
 
 app.post("/transaction-complete", (req, res) => {
@@ -76,11 +88,11 @@ app.post("/transaction-complete", (req, res) => {
     var hash = generateHash(str);
 
     frame_data(f,t,a,dateTime,hash);
-    res.sendFile(__dirname+'/public/complete.html');
+    res.sendFile(__dirname+'/public/html/complete.html');
 })
 
 app.get('/', (req, res)=> {
-    res.sendFile(__dirname+'/public/index.html');
+    res.sendFile(__dirname+'/public/html/index.html');
 });
 
 app.listen(3000, ()=>console.log("Server started at Port 3000"));
